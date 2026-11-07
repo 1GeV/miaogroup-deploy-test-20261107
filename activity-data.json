@@ -1,0 +1,22 @@
+---
+layout: null
+permalink: /activity-data.json
+---
+[
+{% assign first = true %}{% for item in site.pages %}{% if item.path contains 'src/content/events/' or item.path contains 'src/content/seminars/' %}{% unless item.draft %}{% unless first %},{% endunless %}{% assign first = false %}
+{
+  "id": {{ item.path | jsonify }},
+  "title": {{ item.title | jsonify }},
+  "date": {{ item.date | date_to_xmlschema | jsonify }},
+  "time": {{ item.time | jsonify }},
+  "endDate": {{ item.endDate | jsonify }},
+  "type": {% if item.path contains 'src/content/seminars/' %}"seminar"{% else %}{{ item.type | jsonify }}{% endif %},
+  "speaker": {{ item.speaker | jsonify }},
+  "location": {{ item.location | jsonify }},
+  "public": {{ item.public | jsonify }},
+  "series": {{ item.series | jsonify }},
+  "description": {{ item.description | jsonify }},
+  "onlineMeeting": {{ item.onlineMeeting | jsonify }},
+  "references": {{ item.references | jsonify }}
+}{% endunless %}{% endif %}{% endfor %}
+]

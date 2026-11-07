@@ -1,0 +1,14 @@
+---
+layout: null
+---
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Miao Group | publication experiment</title>
+<style>body{max-width:960px;margin:50px auto;padding:0 24px;font:16px/1.6 system-ui;color:#183249;background:#fafcfd}h1{font-family:Georgia,serif;font-size:44px}article{padding:20px 0;border-top:1px solid #d7e2e8}h3,p{margin:5px 0}small,.note{color:#536b7e}a{color:#1a6c86}#status{padding:14px;background:#e8f2f3}</style>
+<h1>Miao Group</h1><p class="note">Temporary publication experiment. Jekyll reads the copied Markdown files on GitHub; no local build. The original website is unchanged.</p>
+<p id="status">Loading activity data...</p><p><strong>Update verification:</strong> <span id="marker">markdown-probe-v1</span></p>
+<h2>Upcoming activities</h2><div id="upcoming"></div><h2>Activity archive</h2><div id="archive"></div>
+<script>
+const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function times(item){const d=String(item.date).slice(0,10);const m=String(item.time||'').match(/^(\d{1,2}):(\d{2})(?:\s*[-–—]\s*(\d{1,2}):(\d{2}))?/);const stamp=(day,h,min)=>Date.parse(`${day}T${String(h).padStart(2,'0')}:${String(min).padStart(2,'0')}:00+08:00`);const start=stamp(d,m?m[1]:0,m?m[2]:0);let end=m&&m[3]?stamp(item.endDate?String(item.endDate).slice(0,10):d,m[3],m[4]):start;if(m&&m[3]&&!item.endDate&&end<=start)end+=86400000;return{start,end};}
+function card(item){const person=typeof item.speaker==='object'?item.speaker?.name:item.speaker;const refs=(item.references||[]).map(r=>/^https?:\/\//.test(r.url||'')?`<a href="${esc(r.url)}" rel="noreferrer">${esc(r.label)}</a>`:esc(r.label)).join(' · ');return `<article><small>${esc(String(item.date).slice(0,10))} · ${esc(item.time||'')} · ${esc(item.type)}</small><h3>${esc(item.title)}</h3><p>${esc(person)} · ${esc(item.location||'')}</p>${item.description?`<p>${esc(item.description)}</p>`:''}<p>${refs}</p></article>`;}
+fetch('./activity-data.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()}).then(items=>{document.querySelector('#status').textContent=`GitHub built this page from ${items.length} original Markdown records.`;const render=()=>{const now=Date.now();const sorted=[...items].sort((a,b)=>times(a).start-times(b).start);const upcoming=sorted.filter(i=>times(i).end>now);document.querySelector('#upcoming').innerHTML=upcoming.map(card).join('')||'<p>No upcoming activities in this test snapshot.</p>';document.querySelector('#archive').innerHTML=sorted.filter(i=>times(i).end<=now).reverse().map(card).join('');};render();setInterval(render,30000);}).catch(e=>document.querySelector('#status').textContent=`Data load failed: ${e.message}`);
+</script></html>

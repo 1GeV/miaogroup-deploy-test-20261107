@@ -1,0 +1,19 @@
+title: Miao Group publication test
+url: https://1gev.github.io
+baseurl: /miaogroup-deploy-test-20261107
+timezone: Asia/Shanghai
+markdown: kramdown
+theme: null
+exclude:
+  - README.md
+  - CONTRIBUTING.md
+  - SEMINAR-SERIES-GUIDE.md
+  - node_modules
+  - package.json
+  - package-lock.json
+  - src/pages
+  - src/layouts
+  - src/styles
+  - src/lib
+  - src/content.config.ts
+  - preview.ps1
