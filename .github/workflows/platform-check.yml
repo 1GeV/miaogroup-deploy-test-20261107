@@ -1,0 +1,18 @@
+name: Compare standard runner platforms
+on:
+  push:
+    branches:
+      - runner-platform-test
+permissions:
+  contents: read
+jobs:
+  probe:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-slim, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 2
+    steps:
+      - name: Print one diagnostic message
+        run: echo "Standard runner started"
