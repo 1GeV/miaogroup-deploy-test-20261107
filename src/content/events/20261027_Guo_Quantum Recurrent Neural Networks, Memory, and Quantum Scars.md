@@ -16,6 +16,5 @@ references:
     url: "https://arxiv.org/abs/2111.10956"
   - label: "Slides"
     url: "https://github.com/1GeV/miaogroup/releases/download/20261027/PPT_qRNN.and.memory.pdf"
-description: "Online Markdown update verification 20261107-v2; test copy only."
 draft: false
 ---
