@@ -1,0 +1,13 @@
+name: Standard runner only
+on:
+  push:
+    branches:
+      - account-check
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print a diagnostic message
+        run: echo "Standard runner started"
